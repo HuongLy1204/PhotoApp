@@ -1,0 +1,15 @@
+.banner {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  height: 15rem;
+
+  background-image: url(https://thumbs.dreamstime.com/b/cup-coffee-pastel-color-background-summer-flat-lay-cup-coffee-pastel-color-background-copy-space-right-120176338.jpg);
+  background-position: center;
+  background-size: cover;
+  &__title{
+    color: white;
+    font-size: 2rem;
+  }
+}
