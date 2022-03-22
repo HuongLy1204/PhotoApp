@@ -1,0 +1,15 @@
+.photo-main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__photo-list {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 40px 50px auto 50px;
+  }
+}

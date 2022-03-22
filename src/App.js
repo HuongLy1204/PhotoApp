@@ -5,11 +5,10 @@ import Header from "./components/Header";
 import Photo from "./features/Photo";
 import "./App.scss";
 
-
 function App() {
   return (
     <div className="photo-app">
-      <Header />
+    <Header />
       <Routes>
         <Route path="/*" element={<Photo />} />
       </Routes>
@@ -18,3 +17,4 @@ function App() {
 }
 
 export default App;
+

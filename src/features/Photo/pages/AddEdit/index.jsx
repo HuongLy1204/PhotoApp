@@ -1,12 +1,26 @@
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Banner from "../../../../components/Banner";
 import PhotoForm from "../../components/PhotoForm";
-import "./AddEdit.scss"
+import { addPhoto } from "../../photoSlice";
+import "./AddEdit.scss";
+
 function AddEdit(props) {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onHandleSubmit = (values) => {
+    const action = addPhoto(values);
+    dispatch(action);
+    navigate("/photos");
+  };
+  
   return (
     <div className="photo-edit">
       <Banner title="Pick your amazing photo" />
       <div className="photo-edit__form">
-        <PhotoForm onSubmit={(value) => console.log("Form submit:", value)} />
+        <PhotoForm infoPhoto={onHandleSubmit} />
       </div>
     </div>
   );
