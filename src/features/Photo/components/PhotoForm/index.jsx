@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Button, Label } from "reactstrap";
 import NotFound from "../../../../components/NotFound";
 import RandomPhoto from "../../../../components/RandomPhoto";
@@ -7,9 +9,21 @@ import { PHOTO_CATEGORY_OPTIONS } from "../../../../constants/global";
 
 function PhotoForm({ infoPhoto }) {
   const { register, handleSubmit, control } = useForm();
-  const [imageUrl, setImageUrl] = useState(
-    "https://picsum.photos/id/237/200/300"
+
+  const { photoId } = useParams();
+  const isAddMode = !photoId;
+
+  const editedPhoto = useSelector((state) =>
+    state.photo.find((x) => x.id === +photoId)
   );
+  const [imageUrl, setImageUrl] = useState(
+    isAddMode ? "https://picsum.photos/id/237/200/300" : editedPhoto.photo
+  );
+  const initalValue = {
+    // title:"",
+    // category:"",
+    photo: imageUrl,
+  };
 
   const onHandleSubmit = (data) => {
     data.photo = imageUrl;
@@ -21,6 +35,7 @@ function PhotoForm({ infoPhoto }) {
   const getRandomImageUrl = () => {
     const randomId = Math.trunc(Math.random() * 2000);
     setImageUrl(`https://picsum.photos/id/${randomId}/200/300`);
+    console.log(imageUrl);
   };
 
   return (
@@ -29,15 +44,19 @@ function PhotoForm({ infoPhoto }) {
         <Label for="titleId">Title</Label>
         <input
           {...register("title")}
-          // name="title"
-          // id="titleId"
+          value={isAddMode ? initalValue.title : editedPhoto.title}
           placeholder="Eg: Wow nature ... "
         />
       </div>
 
       <div>
         <Label for="categoryId">Category</Label>
-        <select id="categoryId" name="categoryId" {...register("category")}>
+        <select
+          value={isAddMode ? initalValue.category : editedPhoto.category}
+          id="categoryId"
+          name="categoryId"
+          {...register("category")}
+        >
           {PHOTO_CATEGORY_OPTIONS.map((item) => (
             <option key={item.id}>{item.label}</option>
           ))}
@@ -56,7 +75,10 @@ function PhotoForm({ infoPhoto }) {
           name="photo"
           {...register("photo")}
           render={({ field }) => (
-            <RandomPhoto {...register("id")} imagesUrl={imageUrl}></RandomPhoto>
+            <RandomPhoto
+              {...register("id")}
+              imagesUrl={imageUrl}
+            ></RandomPhoto>
           )}
         ></Controller>
       </div>

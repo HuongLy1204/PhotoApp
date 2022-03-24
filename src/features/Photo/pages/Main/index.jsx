@@ -9,12 +9,22 @@ import { removePhoto } from "../../photoSlice";
 import "./Main.scss";
 
 function MainPage(props) {
+  
   const listPhoto = useSelector((state) => state.photo);
-  const dispatch = useDispatch()
+  
+  const dispatch = useDispatch();
 
-  const onHandleRemovePhoto= (data)=>{
-    dispatch(removePhoto(data))
+  localStorage.setItem("infoPhoto", JSON.stringify(listPhoto));
+
+
+
+  const onHandleRemovePhoto = (data) => {
+    dispatch(removePhoto(data));
+  };
+  const onHandleEditPhoto=()=>{
+    
   }
+
   return (
     <div className="photo-main">
       <Banner title="Yours awesome photos " backgroundUrl={Images.SEA_BG} />
@@ -23,9 +33,13 @@ function MainPage(props) {
       </Container>
       <div className="photo-main__photo-list">
         {listPhoto.map((item) => {
-          return<PhotoItem 
-          infoPhoto={item}
-          removePhoto={onHandleRemovePhoto} ></PhotoItem>;
+          return (
+            <PhotoItem
+              infoPhoto={item}
+              removePhoto={onHandleRemovePhoto}
+              editPhoto={onHandleEditPhoto}
+            ></PhotoItem>
+          );
         })}
       </div>
     </div>

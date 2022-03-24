@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Card,
   CardImg,
@@ -10,9 +11,16 @@ import {
 import "./PhotoItem.scss";
 
 function PhotoItem({ infoPhoto , removePhoto}) {
+
+  const navigate= useNavigate()
+  
   const handleRemovePhoto=()=>{
    removePhoto(infoPhoto.id)
+  }
+  const handleEditPhoto=()=>{
+   navigate(`add/${infoPhoto.id}`)
 
+   
   }
   return (
     <div className="photo-item">
@@ -30,7 +38,7 @@ function PhotoItem({ infoPhoto , removePhoto}) {
           </CardText>
         </CardImgOverlay>
         <div className="photo-item__container__button">
-          <Button color="info" outline>
+          <Button onClick={handleEditPhoto} color="info" outline>
             Edit
           </Button>
           <Button onClick={handleRemovePhoto} color="warning" outline>
